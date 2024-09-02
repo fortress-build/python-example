@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+</head>
+<body>
+    <h1>To-Do List</h1>
+    <form action="/add" method="POST">
+        <input type="text" name="title" placeholder="Enter a new task" required>
+        <button type="submit">Add</button>
+    </form>
+    <ul>
+        {% for task in tasks %}
+        <li>
+            {{ task[1] }} <!-- Access the title from the tuple -->
+            {% if task[2] %} <!-- Check if the task is marked as done -->
+            <span>✔️</span>
+            {% endif %}
+            <a href="/update/{{ task[0] }}">Toggle</a> <!-- Use the task ID for updating -->
+            <a href="/delete/{{ task[0] }}">Delete</a> <!-- Use the task ID for deleting -->
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database View</title>
+</head>
+<body>
+    <h1>Current Tasks in Database</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Done</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for task in tasks %}
+            <tr>
+                <td>{{ task[0] }}</td>
+                <td>{{ task[1] }}</td>
+                <td>{{ task[2] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <br>
+    <a href="{{ url_for('index') }}">Back to Task Manager</a>
+</body>
+
+</html>
